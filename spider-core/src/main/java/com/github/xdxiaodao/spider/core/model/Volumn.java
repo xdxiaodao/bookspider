@@ -1,46 +1,33 @@
 package com.github.xdxiaodao.spider.core.model;
 
-import java.util.List;
+import com.github.xdxiaodao.spider.core.base.model.SpiderNode;
+import com.github.xdxiaodao.spider.core.common.enums.NodeType;
+import com.github.xdxiaodao.spider.core.common.enums.ParseProcessType;
+import com.google.common.collect.Maps;
+
+import java.sql.Timestamp;
+import java.util.Map;
 
 /**
- * Created by xiaohuilang on 17/5/13.
+ * Created with bookspider
+ * User zhangmz
+ * Date 2017/5/13
+ * Time 12:36
+ * Desc
  */
-public class Volumn {
+public class Volumn extends SpiderNode {
 
-    private Long id;
-    private String name;
     private Integer chapterNum;
-    private List<Chapter> chapterList;
 
-    public Long getId() {
-        return id;
+    private Volumn() {
+        this.setNodeType(NodeType.VOLUMN);
+        this.setThreadNum(1);
+        this.setParseProcess(ParseProcessType.WAITING);
+        this.setCreateTime(new Timestamp(System.currentTimeMillis()));
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public static Volumn me() {
+        return new Volumn();
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getChapterNum() {
-        return chapterNum;
-    }
-
-    public void setChapterNum(Integer chapterNum) {
-        this.chapterNum = chapterNum;
-    }
-
-    public List<Chapter> getChapterList() {
-        return chapterList;
-    }
-
-    public void setChapterList(List<Chapter> chapterList) {
-        this.chapterList = chapterList;
-    }
 }

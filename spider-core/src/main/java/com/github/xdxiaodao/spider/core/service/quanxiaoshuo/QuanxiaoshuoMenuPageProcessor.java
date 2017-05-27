@@ -1,8 +1,17 @@
 package com.github.xdxiaodao.spider.core.service.quanxiaoshuo;
 
+import com.github.xdxiaodao.spider.core.base.model.Node;
 import com.github.xdxiaodao.spider.core.common.SpiderConstants;
+import com.github.xdxiaodao.spider.core.base.service.BaseBookProcessor;
+import com.github.xdxiaodao.spider.core.common.interfaces.BookPageProcessor;
+import com.github.xdxiaodao.spider.core.model.Book;
+import com.github.xdxiaodao.spider.core.service.book.BookSpiderService;
 import com.github.xdxiaodao.spider.core.util.HtmlUtil;
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
@@ -11,22 +20,22 @@ import us.codecraft.webmagic.selector.Html;
 import us.codecraft.webmagic.selector.Selectable;
 
 /**
- * Created with freebook
- * User zhangmuzhao
+ * Created with bookspider
+ * User zhangmz
  * Date 2017/5/15
  * Time 11:07
  * Desc
  */
-public class QuanxiaoshuoMenuPageProcessor implements PageProcessor{
+@Service
+public class QuanxiaoshuoMenuPageProcessor extends BaseBookProcessor implements PageProcessor, BookPageProcessor {
+    private static Logger logger = LoggerFactory.getLogger(QuanxiaoshuoMenuPageProcessor.class);
 
     private String url;
     private String name;
 
-    /**
-     * process the page, extract urls to fetch, extract the data and store
-     *
-     * @param page page
-     */
+    @Autowired
+    private QuanxiaoshuoBookPageProcessor quanxiaoshuoMenuPageProcessor;
+
     @Override
     public void process(Page page) {
 
@@ -40,19 +49,14 @@ public class QuanxiaoshuoMenuPageProcessor implements PageProcessor{
                 String[] bookInfoArr = HtmlUtil.extractHrefInfoFromA(bookInfo);
                 String[] authorInfoArr = HtmlUtil.extractHrefInfoFromA(authorInfo);
 
-                System.out.println("book Name:" + bookInfoArr[0] + ", bookUrl:" + bookInfoArr[1]);
-                QuanxiaoshuoBookPageProcessor.newQuanxiaoshuoBookPageProcessor(bookInfoArr[1], name + "\\" + bookInfoArr[0] + ".txt").start();
+                logger.info("book Name:" + bookInfoArr[0] + ", bookUrl:" + bookInfoArr[1]);
+
+                Node book = Book.me().bookPageProcessor(quanxiaoshuoMenuPageProcessor).name(bookInfoArr[0]).url(bookInfoArr[1]).parent(parentNode);
+                ((BookSpiderService) spider).newNode(book);
             }
         }
-        System.out.println("bookSelectableList");
     }
 
-    /**
-     * get the site settings
-     *
-     * @return site
-     * @see us.codecraft.webmagic.Site
-     */
     @Override
     public Site getSite() {
         return SpiderConstants.DEFAULT_SITE;

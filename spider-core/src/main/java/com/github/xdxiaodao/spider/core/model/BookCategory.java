@@ -1,41 +1,36 @@
 package com.github.xdxiaodao.spider.core.model;
 
+import com.github.xdxiaodao.spider.core.base.model.Node;
+import com.github.xdxiaodao.spider.core.base.model.SpiderNode;
+import com.github.xdxiaodao.spider.core.common.enums.NodeType;
+import com.github.xdxiaodao.spider.core.common.enums.ParseProcessType;
 import com.google.common.collect.Maps;
 
+import java.sql.Timestamp;
 import java.util.Map;
 
 /**
- * Created by xiaohuilang on 17/5/13.
+ * Created with bookspider
+ * User zhangmz
+ * Date 2017/5/13
+ * Time 12:36
+ * Desc
  */
-public class BookCategory {
+public class BookCategory extends SpiderNode {
 
-    private String categoryName;
-
-    private Map<String, Book> bookMap = Maps.newConcurrentMap();
-
-    public static BookCategory newBookCategory(String categoryName) {
-        BookCategory bookCategory = new BookCategory();
-        bookCategory.setCategoryName(categoryName);
-        return bookCategory;
+    private BookCategory() {
+        this.setNodeType(NodeType.CATEGORY);
+        this.setThreadNum(1);
+        this.setParseProcess(ParseProcessType.WAITING);
+        this.setCreateTime(new Timestamp(System.currentTimeMillis()));
     }
 
-    public void addBook(Book book) {
-
+    public static BookCategory me () {
+        return new BookCategory();
     }
 
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public Map<String, Book> getBookMap() {
-        return bookMap;
-    }
-
-    public void setBookMap(Map<String, Book> bookMap) {
-        this.bookMap = bookMap;
+    @Override
+    public Node getParent() {
+        return null;
     }
 }

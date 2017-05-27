@@ -6,7 +6,11 @@ import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 
 /**
- * Created by xiaohuilang on 17/5/13.
+ * Created with bookspider
+ * User zhangmz
+ * Date 2017/5/13
+ * Time 12:36
+ * Desc
  */
 public class ZonghengPageProcessor implements PageProcessor{
 

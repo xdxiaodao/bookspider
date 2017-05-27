@@ -5,7 +5,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
- * Created by xiaohuilang on 17/5/23.
+ * Created with bookspider
+ * User zhangmz
+ * Date 2017/5/23
+ * Time 18:51
+ * Desc
  */
 public class Application {
 

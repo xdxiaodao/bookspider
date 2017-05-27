@@ -1,28 +1,33 @@
 package com.github.xdxiaodao.spider.core.model;
 
+import com.github.xdxiaodao.spider.core.base.model.SpiderNode;
+import com.github.xdxiaodao.spider.core.common.enums.NodeType;
+import com.github.xdxiaodao.spider.core.common.enums.ParseProcessType;
+
+import java.sql.Timestamp;
+
 /**
- * Created by xiaohuilang on 17/5/13.
+ * Created with bookspider
+ * User zhangmz
+ * Date 2017/5/13
+ * Time 12:36
+ * Desc
  */
-public class Chapter {
-    private Long id;
-    private String name;
+public class Chapter extends SpiderNode {
+    private Long index;
     private String content;
     private Integer contentSize;
+    private String chapterUrl;
 
-    public Long getId() {
-        return id;
+    private Chapter() {
+        this.setNodeType(NodeType.CHAPTER);
+        this.setThreadNum(10);
+        this.setParseProcess(ParseProcessType.WAITING);
+        this.setCreateTime(new Timestamp(System.currentTimeMillis()));
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public static Chapter me() {
+        return new Chapter();
     }
 
     public String getContent() {
@@ -33,11 +38,12 @@ public class Chapter {
         this.content = content;
     }
 
-    public Integer getContentSize() {
-        return contentSize;
+    public Long getIndex() {
+        return index;
     }
 
-    public void setContentSize(Integer contentSize) {
-        this.contentSize = contentSize;
+    public void setIndex(Long index) {
+        this.index = index;
     }
+
 }

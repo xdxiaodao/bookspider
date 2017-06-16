@@ -18,14 +18,6 @@
 
         <webmagic.version>0.6.1</webmagic.version>
 
-        <!-- 公用模块依赖版本 start -->
-        <kiwi.utils.version>0.0.17</kiwi.utils.version>
-        <kiwi.cache.version>0.0.9</kiwi.cache.version>
-        <kiwi.message.version>0.0.11</kiwi.message.version>
-        <kiwi.thrift.version>0.0.9</kiwi.thrift.version>
-        <kiwi.event.version>0.0.3</kiwi.event.version>
-        <!-- 公用模块依赖版本 end -->
-
         <!-- 数据库通用配置 start -->
         <jdbc.driver.groupId>mysql</jdbc.driver.groupId>
         <jdbc.driver.artifactId>mysql-connector-java</jdbc.driver.artifactId>
@@ -66,7 +58,6 @@
         <javax.servlet.jstl.version>1.2</javax.servlet.jstl.version>
         <taglibs.version>1.1.2</taglibs.version>
         <javax.servlet.servlet-api.version>2.5</javax.servlet.servlet-api.version>
-        <qiyi-cloudstorage-JQCS.version>0.0.1</qiyi-cloudstorage-JQCS.version>
         <!-- 依赖版本 end -->
     </properties>
 
@@ -83,67 +74,6 @@
                 <artifactId>webmagic-extension</artifactId>
                 <version>${webmagic.version}</version>
             </dependency>
-            <!-- 公用模块依赖版本 start -->
-            <dependency>
-                <groupId>com.iqiyi.kiwi</groupId>
-                <artifactId>kiwi-utils</artifactId>
-                <version>${kiwi.utils.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.slf4j</groupId>
-                        <artifactId>slf4j-log4j12</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>com.iqiyi.kiwi</groupId>
-                <artifactId>kiwi-cache</artifactId>
-                <version>${kiwi.cache.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.slf4j</groupId>
-                        <artifactId>slf4j-log4j12</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>com.iqiyi.kiwi</groupId>
-                <artifactId>kiwi-message</artifactId>
-                <version>${kiwi.message.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.slf4j</groupId>
-                        <artifactId>slf4j-log4j12</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>com.iqiyi.kiwi</groupId>
-                <artifactId>kiwi-thrift-new</artifactId>
-                <version>${kiwi.thrift.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.slf4j</groupId>
-                        <artifactId>slf4j-log4j12</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>protobuf-java</artifactId>
-                        <groupId>com.google.protobuf</groupId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>com.iqiyi.kiwi</groupId>
-                <artifactId>kiwi-event</artifactId>
-                <version>${kiwi.event.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.slf4j</groupId>
-                        <artifactId>slf4j-log4j12</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <!-- 公用模块依赖版本 start -->
 
             <!-- spring begin -->
             <dependency>
@@ -688,11 +618,6 @@
                 <groupId>commons-configuration</groupId>
                 <artifactId>commons-configuration</artifactId>
                 <version>1.8</version>
-            </dependency>
-            <dependency>
-                <groupId>com.iqiyi.cloudstorage</groupId>
-                <artifactId>qiyi-cloudstorage-JQCS</artifactId>
-                <version>${qiyi-cloudstorage-JQCS.version}</version>
             </dependency>
 
             <dependency>

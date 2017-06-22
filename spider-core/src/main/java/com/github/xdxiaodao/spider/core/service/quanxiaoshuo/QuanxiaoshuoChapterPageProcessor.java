@@ -9,7 +9,9 @@ import com.github.xdxiaodao.spider.core.common.interfaces.BookPageProcessor;
 import com.github.xdxiaodao.spider.core.model.Book;
 import com.github.xdxiaodao.spider.core.model.Chapter;
 import com.github.xdxiaodao.spider.core.util.HtmlUtil;
+import com.github.xdxiaodao.spider.core.util.HttpProxyUtil;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.HttpHost;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -58,7 +60,12 @@ public class QuanxiaoshuoChapterPageProcessor extends BaseBookProcessor implemen
 
     @Override
     public Site getSite() {
-        return SpiderConstants.CHAPTER_SITE;
+        Site site = SpiderConstants.CHAPTER_SITE;
+        HttpHost httpHost = HttpProxyUtil.getHttpProxy();
+        if (null != httpHost) {
+            site.setHttpProxy(httpHost);
+        }
+        return site;
     }
 
     public static QuanxiaoshuoChapterPageProcessor newQuanxiaoshuoChapterPageProcessor(String url, String name, String bookPath) {

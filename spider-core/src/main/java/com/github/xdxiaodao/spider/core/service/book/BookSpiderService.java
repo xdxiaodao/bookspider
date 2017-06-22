@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.xdxiaodao.spider.core.base.model.Node;
 import com.github.xdxiaodao.spider.core.base.model.SpiderNode;
 import com.github.xdxiaodao.spider.core.base.service.platform.BaseThreadFactory;
+import com.github.xdxiaodao.spider.core.base.service.webmagic.SafelyHttpDownloader;
 import com.github.xdxiaodao.spider.core.common.enums.ParseProcessType;
 import com.github.xdxiaodao.spider.core.common.interfaces.BookPageProcessor;
 import com.github.xdxiaodao.spider.core.common.interfaces.ISpider;
@@ -57,6 +58,9 @@ public class BookSpiderService implements ISpider, InitializingBean{
 
     @Autowired
     private QuanxiaoshuoMainPageProcessor quanxiaoshuoMainPageProcessor;
+
+    @Autowired
+    private SafelyHttpDownloader httpDownloader;
 
     public void start() {
         startQuanxiaoshuo();
@@ -198,7 +202,7 @@ public class BookSpiderService implements ISpider, InitializingBean{
         String url = unParseNode.getUrl();
         BookPageProcessor bookPageProcessor = unParseNode.getBookPageProcessor();
         bookPageProcessor.register(this, unParseNode);
-        Spider.create(bookPageProcessor).addUrl(url).thread((unParseNode).getThreadNum()).run();
+        Spider.create(bookPageProcessor).addUrl(url).setDownloader(httpDownloader).thread((unParseNode).getThreadNum()).run();
     }
 
 

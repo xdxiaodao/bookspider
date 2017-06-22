@@ -9,10 +9,12 @@ import com.github.xdxiaodao.spider.core.model.Book;
 import com.github.xdxiaodao.spider.core.model.Chapter;
 import com.github.xdxiaodao.spider.core.service.book.BookSpiderService;
 import com.github.xdxiaodao.spider.core.util.HtmlUtil;
+import com.github.xdxiaodao.spider.core.util.HttpProxyUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.http.HttpHost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Page;
@@ -75,7 +77,12 @@ public class QuanxiaoshuoBookPageProcessor extends BaseBookProcessor implements 
 
     @Override
     public Site getSite() {
-        return SpiderConstants.DEFAULT_SITE;
+        Site site = SpiderConstants.DEFAULT_SITE;
+        HttpHost httpHost = HttpProxyUtil.getHttpProxy();
+        if (null != httpHost) {
+            site.setHttpProxy(httpHost);
+        }
+        return site;
     }
 
     public static QuanxiaoshuoBookPageProcessor newQuanxiaoshuoBookPageProcessor(String url, String name) {

@@ -24,12 +24,13 @@
         </plugins>
     </build>
 
-    <properties>
-        <slf4j.version>1.7.2</slf4j.version>
-        <webmagic.version>0.6.1</webmagic.version>
-    </properties>
-
     <dependencies>
+
+        <dependency>
+            <groupId>com.github.xdxiaodao</groupId>
+            <artifactId>dynamic-ip</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>us.codecraft</groupId>
             <artifactId>webmagic-core</artifactId>

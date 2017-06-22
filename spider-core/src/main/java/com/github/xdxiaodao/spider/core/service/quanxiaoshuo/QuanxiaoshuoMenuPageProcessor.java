@@ -7,7 +7,9 @@ import com.github.xdxiaodao.spider.core.common.interfaces.BookPageProcessor;
 import com.github.xdxiaodao.spider.core.model.Book;
 import com.github.xdxiaodao.spider.core.service.book.BookSpiderService;
 import com.github.xdxiaodao.spider.core.util.HtmlUtil;
+import com.github.xdxiaodao.spider.core.util.HttpProxyUtil;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.http.HttpHost;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +61,12 @@ public class QuanxiaoshuoMenuPageProcessor extends BaseBookProcessor implements 
 
     @Override
     public Site getSite() {
-        return SpiderConstants.DEFAULT_SITE;
+        Site site = SpiderConstants.DEFAULT_SITE;
+        HttpHost httpHost = HttpProxyUtil.getHttpProxy();
+        if (null != httpHost) {
+            site.setHttpProxy(httpHost);
+        }
+        return site;
     }
 
     public static QuanxiaoshuoMenuPageProcessor newQuanxiaoshuoMenuPageProcessor(String url, String name) {

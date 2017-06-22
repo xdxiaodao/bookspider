@@ -22,8 +22,11 @@
     </bean>
 
     <!-- 使用annotation 自动注册bean,并保证@Required,@Autowired的属性被注入 -->
+    <context:component-scan base-package="com.github.xdxiaodao.dynamicip"/>
     <context:component-scan base-package="com.github.xdxiaodao.spider"/>
 
     <context:annotation-config/>
+
+    <bean class="com.github.xdxiaodao.spider.core.util.SpringBeanUtil" lazy-init="false"/>
 
 </beans>

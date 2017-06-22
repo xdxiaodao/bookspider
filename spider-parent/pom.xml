@@ -65,6 +65,12 @@
         <dependencies>
 
             <dependency>
+                <groupId>com.github.xdxiaodao</groupId>
+                <artifactId>dynamic-ip</artifactId>
+                <version>${spider.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>us.codecraft</groupId>
                 <artifactId>webmagic-core</artifactId>
                 <version>${webmagic.version}</version>

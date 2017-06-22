@@ -11,7 +11,7 @@ import us.codecraft.webmagic.Site;
  */
 public class SpiderConstants {
 
-    public static final Site DEFAULT_SITE = Site.me().setRetryTimes(3).setSleepTime(100);
+    public static final Site DEFAULT_SITE = Site.me().setRetryTimes(3).setSleepTime(100).setTimeOut(2000);
 
-    public static final Site CHAPTER_SITE = Site.me().setRetryTimes(3).setSleepTime(500).setRetrySleepTime(2000);
+    public static final Site CHAPTER_SITE = Site.me().setRetryTimes(3).setSleepTime(500).setTimeOut(2000).setRetrySleepTime(2000);
 }

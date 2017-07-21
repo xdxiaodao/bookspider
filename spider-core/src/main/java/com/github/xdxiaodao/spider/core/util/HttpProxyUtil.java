@@ -33,6 +33,10 @@ public class HttpProxyUtil {
             return null;
         }
 
+        if (dynamicIp.getIp().equalsIgnoreCase("localhost")) {
+            return null;
+        }
+
         HttpHost httpHost = new HttpHost(dynamicIp.getIp(), dynamicIp.getPort());
         proxyMap.put(httpHost, dynamicIp);
         return httpHost;

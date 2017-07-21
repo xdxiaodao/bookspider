@@ -9,18 +9,13 @@ import com.github.xdxiaodao.spider.core.common.enums.ParseProcessType;
 import com.github.xdxiaodao.spider.core.common.interfaces.BookPageProcessor;
 import com.github.xdxiaodao.spider.core.common.interfaces.ISpider;
 import com.github.xdxiaodao.spider.core.model.Book;
-import com.github.xdxiaodao.spider.core.model.BookCategory;
 import com.github.xdxiaodao.spider.core.model.Chapter;
-import com.github.xdxiaodao.spider.core.model.Volumn;
 import com.github.xdxiaodao.spider.core.service.quanxiaoshuo.QuanxiaoshuoMainPageProcessor;
-import com.github.xdxiaodao.spider.core.service.quanxiaoshuo.QuanxiaoshuoMenuPageProcessor;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -54,7 +49,7 @@ public class BookSpiderService implements ISpider, InitializingBean{
     private ExecutorService bookSpiderExecutor = Executors.newFixedThreadPool(30, new BaseThreadFactory("bookSpider-"));
     private ExecutorService bookCollectExecutor = Executors.newFixedThreadPool(5, new BaseThreadFactory("bookPipline-"));
 
-    private static String ROOT_DIR_NAME = "D:\\personal\\data\\book\\quanxiaoshuo\\";
+    private static String ROOT_DIR_NAME = "/data/book/quanxiaoshuo/";
 
     @Autowired
     private QuanxiaoshuoMainPageProcessor quanxiaoshuoMainPageProcessor;
@@ -167,33 +162,41 @@ public class BookSpiderService implements ISpider, InitializingBean{
             });
 
             // 拼装书籍路径
-            String bookDir = ROOT_DIR_NAME + spiderNode.getParent().getName();
-            String bookPath = bookDir + "\\" + spiderNode.getName();
+            String bookDir = ROOT_DIR_NAME + spiderNode.getParent().getName() + "/" + spiderNode.getName();
+//            String bookPath = bookDir + "\\" + spiderNode.getName();
             File file = new File(bookDir);
             if (!file.exists()) {
                 file.mkdirs();
             }
-            FileWriter fileWriter = null;
-            try {
-                fileWriter = new FileWriter(bookPath, true);
-                for (Node node : nodeList) {
-                    if (!(node instanceof Chapter)) {
+
+            int count = 1;
+            for (Node node : nodeList) {
+                if (!(node instanceof Chapter)) {
+                    continue;
+                }
+                FileWriter fileWriter = null;
+                try {
+                    String bookPath = bookDir + "/" + String.format("%04d", count) + ".txt";
+                    File bookFile = new File(bookPath);
+                    if (bookFile.exists()) {
                         continue;
                     }
-
+                    fileWriter = new FileWriter(bookPath, false);
                     IOUtils.write(((Chapter) node).getContent(), fileWriter);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (null != fileWriter) {
-                        fileWriter.close();
-                    }
+                    count++;
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error("写数据失败,数据内容：{}", ((Chapter) node).getContent());
+                } finally {
+                    try {
+                        if (null != fileWriter) {
+                            fileWriter.close();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
+
         }
     }
 
@@ -240,7 +243,7 @@ public class BookSpiderService implements ISpider, InitializingBean{
     @Override
     public void afterPropertiesSet() throws Exception {
 
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 5; i++) {
             bookSpiderExecutor.submit(new BookSpiderWorker());
         }
 

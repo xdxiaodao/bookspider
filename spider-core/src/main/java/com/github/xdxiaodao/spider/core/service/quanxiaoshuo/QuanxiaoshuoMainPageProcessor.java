@@ -64,6 +64,10 @@ public class QuanxiaoshuoMainPageProcessor extends BaseBookProcessor implements 
                                 continue;
                             }
 
+                            if (!menuName.contains("幻")) {
+                                continue;
+                            }
+
                             Node bookCategory = BookCategory.me().bookPageProcessor(quanxiaoshuoMenuPageProcessor).name(menuName).url(menuHref).parent(parentNode);
                             ((BookSpiderService) spider).newNode(bookCategory);
 

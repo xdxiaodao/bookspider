@@ -58,6 +58,39 @@ public class HtmlUtil {
         return resultList;
     }
 
+    /**
+     * 使用分隔符解析内容
+     * @param content 内容
+     * @param splitStr 分隔符
+     * @return 结果
+     */
+    public static List<String> extractContentUseSplit(String content, String splitStr) {
+        if (StringUtils.isBlank(content)) {
+            return Lists.newArrayList();
+        }
+
+        List<String> resultList = Lists.newArrayList();
+        if (StringUtils.isBlank(splitStr)) {
+            resultList.add(content);
+            return resultList;
+        }
+
+        String[] contentArr = content.split(splitStr);
+        for (String tmpContent : contentArr) {
+            if (StringUtils.isBlank(tmpContent)) {
+                continue;
+            }
+            resultList.add(tmpContent.trim());
+        }
+
+        // 如果没有解析到内容，则直接添加整块内容
+        if (CollectionUtils.isEmpty(resultList)) {
+            resultList.add(content);
+        }
+
+        return resultList;
+    }
+
     public static String filterContentHtmlTag(String content, String... htmlTags) {
         if (StringUtils.isBlank(content)) {
             return "";

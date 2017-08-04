@@ -65,7 +65,7 @@ public class KanunuBookPageProcessor extends BaseBookProcessor implements PagePr
                 }
 
                 // 校验url是否为本书，如果章节url不包含书籍url，则跳过
-                String bookUrlPrefix = this.parentNode.getUrl().replace(".html", "/");
+                String bookUrlPrefix = this.parentNode.getUrl().replace("/index", "").replace(".html", "/");
                 if (!chapterInfoArr[1].contains(bookUrlPrefix)) {
                     continue;
                 }

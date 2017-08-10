@@ -17,7 +17,10 @@ import java.util.Map;
  */
 public class Volumn extends SpiderNode {
 
-    private Integer chapterNum;
+    private Long bookId; // 书籍ID
+    private Integer volumnIndex; // 卷索引
+    private Integer chapterNum; // 章节数
+    private String volumnDesc; // 卷描述
 
     private Volumn() {
         this.setNodeType(NodeType.VOLUMN);

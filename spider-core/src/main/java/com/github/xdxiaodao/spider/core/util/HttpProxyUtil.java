@@ -22,24 +22,25 @@ import java.util.concurrent.ConcurrentHashMap;
 public class HttpProxyUtil {
     private static Logger logger = LoggerFactory.getLogger(HttpProxyUtil.class);
 
-    private static DynamicIpService dynamicIpService = SpringBeanUtil.getBean(DynamicIpService.class);
+//    private static DynamicIpService dynamicIpService = SpringBeanUtil.getBean(DynamicIpService.class);
 
     private static ConcurrentHashMap<HttpHost, DynamicIp> proxyMap = new ConcurrentHashMap<HttpHost, DynamicIp>();
 
     public static HttpHost getHttpProxy() {
-        DynamicIp dynamicIp = dynamicIpService.getEffectiveIp();
-        logger.info("获取到动态ip为{}", JSON.toJSONString(dynamicIp));
-        if (null == dynamicIp) {
-            return null;
-        }
-
-        if (dynamicIp.getIp().equalsIgnoreCase("localhost")) {
-            return null;
-        }
-
-        HttpHost httpHost = new HttpHost(dynamicIp.getIp(), dynamicIp.getPort());
-        proxyMap.put(httpHost, dynamicIp);
-        return httpHost;
+//        DynamicIp dynamicIp = dynamicIpService.getEffectiveIp();
+//        logger.info("获取到动态ip为{}", JSON.toJSONString(dynamicIp));
+//        if (null == dynamicIp) {
+//            return null;
+//        }
+//
+//        if (dynamicIp.getIp().equalsIgnoreCase("localhost")) {
+//            return null;
+//        }
+//
+//        HttpHost httpHost = new HttpHost(dynamicIp.getIp(), dynamicIp.getPort());
+//        proxyMap.put(httpHost, dynamicIp);
+//        return httpHost;
+        return null;
     }
 
     /**

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.xdxiaodao.spider.core.dao.mapper.ChapterMapper" >
+  <resultMap id="BaseResultMap" type="com.github.xdxiaodao.spider.core.model.po.Chapter" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="bookChapterIndex" property="bookChapterIndex" jdbcType="INTEGER" />
+    <result column="volumnChapterIndex" property="volumnChapterIndex" jdbcType="INTEGER" />
+    <result column="bookId" property="bookId" jdbcType="BIGINT" />
+    <result column="volumnId" property="volumnId" jdbcType="BIGINT" />
+    <result column="contentSize" property="contentSize" jdbcType="INTEGER" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+</mapper>

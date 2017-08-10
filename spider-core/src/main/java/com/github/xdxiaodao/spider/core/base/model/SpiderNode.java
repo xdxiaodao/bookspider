@@ -23,6 +23,8 @@ public abstract class SpiderNode extends Node implements Comparable<SpiderNode>{
     private AtomicInteger count = new AtomicInteger(0);
     private Timestamp createTime;
     private Timestamp parseStartTime;
+    private Timestamp updateTime;
+    private Integer status;
 
     public SpiderNode bookPageProcessor(BookPageProcessor bookPageProcessor) {
         this.bookPageProcessor = bookPageProcessor;
@@ -129,5 +131,13 @@ public abstract class SpiderNode extends Node implements Comparable<SpiderNode>{
             return o.getCreateTime().compareTo(this.getCreateTime());
         }
         return o.count.get() - this.getCount().get();
+    }
+
+    public Timestamp getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
     }
 }

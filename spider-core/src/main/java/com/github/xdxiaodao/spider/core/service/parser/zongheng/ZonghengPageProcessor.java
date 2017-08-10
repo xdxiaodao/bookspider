@@ -1,4 +1,4 @@
-package com.github.xdxiaodao.spider.core.service.zongheng;
+package com.github.xdxiaodao.spider.core.service.parser.zongheng;
 
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;

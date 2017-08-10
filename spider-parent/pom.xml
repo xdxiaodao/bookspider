@@ -26,8 +26,11 @@
         <!-- 数据库通用配置 end -->
 
         <!-- 依赖版本 start -->
-        <spring.version>3.2.0.RELEASE</spring.version>
+        <spring.version>4.0.2.RELEASE</spring.version>
         <hibernate.version>3.5.5-Final</hibernate.version>
+        <mybatis.version>3.2.6</mybatis.version>
+        <sharding-jdbc.version>1.5.0</sharding-jdbc.version>
+        <persistence.version>1.0</persistence.version>
         <struts2.version>2.3.1.2</struts2.version>
         <cxf.version>2.4.2</cxf.version>
         <jersey.version>1.3</jersey.version>
@@ -179,6 +182,87 @@
                 <groupId>javassist</groupId>
                 <artifactId>javassist</artifactId>
                 <version>${javassist.version}</version>
+            </dependency>
+
+            <!-- mybatis -->
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper</artifactId>
+                <version>3.2.0</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.persistence</groupId>
+                <artifactId>persistence-api</artifactId>
+                <version>${persistence.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>1.2.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-core</artifactId>
+                <version>1.3.2</version>
+            </dependency>
+
+            <!-- mybatis 分库分表 -->
+            <dependency>
+                <groupId>org.shardbatis</groupId>
+                <artifactId>shardbatis</artifactId>
+                <version>2.0.0B</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sf.jsqlparser</groupId>
+                <artifactId>jsqlparser</artifactId>
+                <version>0.7.0</version>
+            </dependency>
+
+            <!-- sharding-jdbc -->
+            <dependency>
+                <groupId>com.dangdang</groupId>
+                <artifactId>sharding-jdbc-core</artifactId>
+                <version>${sharding-jdbc.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.dangdang</groupId>
+                <artifactId>sharding-jdbc-transaction</artifactId>
+                <version>${sharding-jdbc.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.dangdang</groupId>
+                <artifactId>sharding-jdbc-config-spring</artifactId>
+                <version>${sharding-jdbc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>1.1.0</version>
             </dependency>
 
             <!-- spring data access -->
@@ -377,7 +461,14 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>12.0</version>
+                <version>18.0</version>
+            </dependency>
+
+            <!-- 导入dbcp的jar包，用来在applicationContext.xml中配置数据库 -->
+            <dependency>
+                <groupId>commons-dbcp</groupId>
+                <artifactId>commons-dbcp</artifactId>
+                <version>1.2.2</version>
             </dependency>
 
             <!-- utils end -->
@@ -639,5 +730,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
 </project>

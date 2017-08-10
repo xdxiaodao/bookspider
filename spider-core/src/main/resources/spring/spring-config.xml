@@ -13,16 +13,18 @@
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
         <property name="ignoreResourceNotFound" value="true"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
         <property name="locations">
             <list>
                 <!-- 标准配置 -->
                 <value>classpath*:/spider.properties</value>
+                <value>classpath*:/dynamic-ip.properties</value>
             </list>
         </property>
     </bean>
 
     <!-- 使用annotation 自动注册bean,并保证@Required,@Autowired的属性被注入 -->
-    <context:component-scan base-package="com.github.xdxiaodao.dynamicip"/>
+    <!--<context:component-scan base-package="com.github.xdxiaodao.dynamicip"/>-->
     <context:component-scan base-package="com.github.xdxiaodao.spider"/>
 
     <context:annotation-config/>

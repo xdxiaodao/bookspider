@@ -1,4 +1,4 @@
-package com.github.xdxiaodao.spider.core.service.bixia;
+package com.github.xdxiaodao.spider.core.service.parser.bixia;
 
 import com.github.xdxiaodao.spider.core.base.service.BaseBookProcessor;
 import com.github.xdxiaodao.spider.core.base.model.Node;
@@ -11,7 +11,6 @@ import com.github.xdxiaodao.spider.core.model.Chapter;
 import com.github.xdxiaodao.spider.core.util.HtmlUtil;
 import com.github.xdxiaodao.spider.core.util.HttpProxyUtil;
 import com.google.common.collect.Lists;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpHost;
 import org.slf4j.Logger;
@@ -33,7 +32,7 @@ import java.util.List;
  */
 @Service
 public class BixiaChapterPageProcessor extends BaseBookProcessor implements BookPageProcessor {
-    private static Logger logger = LoggerFactory.getLogger(com.github.xdxiaodao.spider.core.service.quanxiaoshuo.QuanxiaoshuoChapterPageProcessor.class);
+    private static Logger logger = LoggerFactory.getLogger(com.github.xdxiaodao.spider.core.service.parser.quanxiaoshuo.QuanxiaoshuoChapterPageProcessor.class);
     private String name;
     private String url;
     private String bookPath;

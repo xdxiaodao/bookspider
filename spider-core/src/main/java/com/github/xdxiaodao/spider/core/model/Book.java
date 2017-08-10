@@ -17,9 +17,12 @@ import java.util.Map;
  */
 public class Book extends SpiderNode {
 
-    private String coverImgUrl;
-    private String bookUrl; // 原始网站书籍url
+    private String coverImg;
     private Integer isUpdate; // 是否已更新完结，0：未更新完结，1：已完结，2：暂停更新
+    private String author; // 作者
+    private String category; // 类目
+    private Integer chapterNum; // 章节数
+    private Integer volumnNum; // 卷数
 
     public final Integer UPDATE_DOING = 0;
     public final Integer UPDATE_CLOSED = 1;

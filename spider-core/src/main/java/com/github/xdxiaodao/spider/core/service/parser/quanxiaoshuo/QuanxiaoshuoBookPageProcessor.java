@@ -1,4 +1,4 @@
-package com.github.xdxiaodao.spider.core.service.bixia;
+package com.github.xdxiaodao.spider.core.service.parser.quanxiaoshuo;
 
 import com.github.xdxiaodao.spider.core.base.model.Node;
 import com.github.xdxiaodao.spider.core.common.SpiderConstants;
@@ -7,7 +7,7 @@ import com.github.xdxiaodao.spider.core.common.enums.ParseProcessType;
 import com.github.xdxiaodao.spider.core.common.interfaces.BookPageProcessor;
 import com.github.xdxiaodao.spider.core.model.Book;
 import com.github.xdxiaodao.spider.core.model.Chapter;
-import com.github.xdxiaodao.spider.core.service.book.BookSpiderService;
+import com.github.xdxiaodao.spider.core.service.spider.BookSpiderService;
 import com.github.xdxiaodao.spider.core.util.HtmlUtil;
 import com.github.xdxiaodao.spider.core.util.HttpProxyUtil;
 import org.apache.commons.collections.CollectionUtils;
@@ -32,18 +32,18 @@ import us.codecraft.webmagic.selector.Selectable;
  * Desc
  */
 @Service
-public class BixiaBookPageProcessor extends BaseBookProcessor implements PageProcessor, BookPageProcessor {
+public class QuanxiaoshuoBookPageProcessor extends BaseBookProcessor implements PageProcessor, BookPageProcessor {
 
     private String name;
     private String url;
 
     @Autowired
-    private BixiaChapterPageProcessor bixiaChapterPageProcessor;
+    private QuanxiaoshuoChapterPageProcessor quanxiaoshuoChapterPageProcessor;
 
     @Override
     public void process(Page page) {
         Html html = page.getHtml();
-        Selectable chapterSelectableList = html.xpath("//div[@class=TabCss]/dl/dd/a");
+        Selectable chapterSelectableList = html.xpath("//div[@class=chapter]/a");
         Book book = Book.me();
         if (parentNode instanceof Book) {
             book = (Book) parentNode;
@@ -61,14 +61,14 @@ public class BixiaBookPageProcessor extends BaseBookProcessor implements PagePro
                 String url = chapterInfoArr[1];
                 String[] parseArr = StringUtils.split(url, "/");
                 if (ArrayUtils.isNotEmpty(parseArr)) {
-                    index = NumberUtils.toLong(parseArr[parseArr.length - 1].replace(".html", ""));
+                    index = NumberUtils.toLong(parseArr[parseArr.length - 1]);
                 }
 
                 // 判断解析是否完成
                 if (++i == chapterSelectableList.nodes().size()) {
                     book.setParseProcess(ParseProcessType.DONE);
                 }
-                Node chapter = Chapter.me().bookPageProcessor(bixiaChapterPageProcessor).name(chapterInfoArr[0]).url(chapterInfoArr[1]).parent(parentNode);
+                Node chapter = Chapter.me().bookPageProcessor(quanxiaoshuoChapterPageProcessor).name(chapterInfoArr[0]).url(chapterInfoArr[1]).parent(parentNode);
                 ((Chapter) chapter).setIndex(index);
                 ((BookSpiderService) spider).newNode(chapter);
             }
@@ -85,12 +85,12 @@ public class BixiaBookPageProcessor extends BaseBookProcessor implements PagePro
         return site;
     }
 
-    public static BixiaBookPageProcessor newQuanxiaoshuoBookPageProcessor(String url, String name) {
-        BixiaBookPageProcessor bixiaBookPageProcessor = new BixiaBookPageProcessor();
-        bixiaBookPageProcessor.url = url;
-        bixiaBookPageProcessor.name = name;
+    public static QuanxiaoshuoBookPageProcessor newQuanxiaoshuoBookPageProcessor(String url, String name) {
+        QuanxiaoshuoBookPageProcessor quanxiaoshuoBookPageProcessor = new QuanxiaoshuoBookPageProcessor();
+        quanxiaoshuoBookPageProcessor.url = url;
+        quanxiaoshuoBookPageProcessor.name = name;
 
-        return bixiaBookPageProcessor;
+        return quanxiaoshuoBookPageProcessor;
     }
 
     public void start() {
@@ -98,6 +98,6 @@ public class BixiaBookPageProcessor extends BaseBookProcessor implements PagePro
     }
 
     public static void main(String[] args) {
-        BixiaBookPageProcessor.newQuanxiaoshuoBookPageProcessor("http://www.bxwx9.org/b/3/3134/", "昆仑").start();
+        QuanxiaoshuoBookPageProcessor.newQuanxiaoshuoBookPageProcessor("http://quanxiaoshuo.com/167454/", "佣兵的战争").start();
     }
 }

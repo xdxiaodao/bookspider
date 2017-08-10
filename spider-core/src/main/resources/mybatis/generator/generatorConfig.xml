@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <!-- caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true -->
+            <property name="caseSensitive" value="true"/>
+        </plugin>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://106.14.21.136:3306/spiderbook"
+                        userId="spider_dev"
+                        password="spider@dev123">
+        </jdbcConnection>
+
+        <javaModelGenerator targetPackage="com.github.xdxiaodao.spider.core.model.po" targetProject="D:\personal\code\bookspider\spider-core\src\main\java"/>
+
+        <sqlMapGenerator targetPackage="mybatis.mapper"  targetProject="D:\personal\code\bookspider\spider-core\src\main\resources"/>
+
+        <javaClientGenerator targetPackage="com.github.xdxiaodao.spider.core.dao.mapper" targetProject="D:\personal\code\bookspider\spider-core\src\main\java" type="XMLMAPPER" />
+
+        <table tableName="tbl_volumn" domainObjectName="Volumn">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+    </context>
+</generatorConfiguration>

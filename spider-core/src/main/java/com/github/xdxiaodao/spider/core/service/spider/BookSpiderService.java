@@ -1,4 +1,4 @@
-package com.github.xdxiaodao.spider.core.service.book;
+package com.github.xdxiaodao.spider.core.service.spider;
 
 import com.alibaba.fastjson.JSON;
 import com.github.xdxiaodao.spider.core.base.model.Node;
@@ -9,8 +9,11 @@ import com.github.xdxiaodao.spider.core.common.enums.ParseProcessType;
 import com.github.xdxiaodao.spider.core.common.interfaces.BookPageProcessor;
 import com.github.xdxiaodao.spider.core.common.interfaces.ISpider;
 import com.github.xdxiaodao.spider.core.model.Book;
+import com.github.xdxiaodao.spider.core.model.BookCategory;
 import com.github.xdxiaodao.spider.core.model.Chapter;
-import com.github.xdxiaodao.spider.core.service.quanxiaoshuo.QuanxiaoshuoMainPageProcessor;
+import com.github.xdxiaodao.spider.core.service.parser.kanunu.KanunuBookPageProcessor;
+import com.github.xdxiaodao.spider.core.service.parser.quanxiaoshuo.QuanxiaoshuoMainPageProcessor;
+import com.github.xdxiaodao.spider.core.util.SpringBeanUtil;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.MapUtils;
@@ -49,7 +52,7 @@ public class BookSpiderService implements ISpider, InitializingBean{
     private ExecutorService bookSpiderExecutor = Executors.newFixedThreadPool(30, new BaseThreadFactory("bookSpider-"));
     private ExecutorService bookCollectExecutor = Executors.newFixedThreadPool(5, new BaseThreadFactory("bookPipline-"));
 
-    private static String ROOT_DIR_NAME = "/data/book/quanxiaoshuo/";
+    private static String ROOT_DIR_NAME = "/data/spider/quanxiaoshuo/";
 
     @Autowired
     private QuanxiaoshuoMainPageProcessor quanxiaoshuoMainPageProcessor;
@@ -62,8 +65,15 @@ public class BookSpiderService implements ISpider, InitializingBean{
     }
 
     private void startQuanxiaoshuo() {
-        quanxiaoshuoMainPageProcessor.register(this, null);
-        Spider.create(quanxiaoshuoMainPageProcessor).addUrl("http://quanxiaoshuo.com").thread(1).run();
+        BookCategory bookCategory = BookCategory.me();
+        bookCategory.setName("武侠");
+        Book book = Book.me();
+        book.setName("清微驭邪录");
+        book.setParent(bookCategory);
+        book.setUrl("http://www.kanunu8.com/book3/5956/index.html");
+        KanunuBookPageProcessor kanunuBookPageProcessor = SpringBeanUtil.getBean(KanunuBookPageProcessor.class);
+        kanunuBookPageProcessor.register(this, book);
+        Spider.create(kanunuBookPageProcessor).addUrl("http://www.kanunu8.com/book3/5956/index.html").thread(1).run();
     }
 
     private class BookSpiderWorker implements Runnable{

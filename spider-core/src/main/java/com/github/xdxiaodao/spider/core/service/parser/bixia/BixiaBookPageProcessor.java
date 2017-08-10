@@ -1,17 +1,15 @@
-package com.github.xdxiaodao.spider.core.service.kanunu;
+package com.github.xdxiaodao.spider.core.service.parser.bixia;
 
 import com.github.xdxiaodao.spider.core.base.model.Node;
-import com.github.xdxiaodao.spider.core.base.model.SpiderNode;
 import com.github.xdxiaodao.spider.core.common.SpiderConstants;
 import com.github.xdxiaodao.spider.core.base.service.BaseBookProcessor;
 import com.github.xdxiaodao.spider.core.common.enums.ParseProcessType;
 import com.github.xdxiaodao.spider.core.common.interfaces.BookPageProcessor;
 import com.github.xdxiaodao.spider.core.model.Book;
 import com.github.xdxiaodao.spider.core.model.Chapter;
-import com.github.xdxiaodao.spider.core.service.book.BookSpiderService;
+import com.github.xdxiaodao.spider.core.service.spider.BookSpiderService;
 import com.github.xdxiaodao.spider.core.util.HtmlUtil;
 import com.github.xdxiaodao.spider.core.util.HttpProxyUtil;
-import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
@@ -26,8 +24,6 @@ import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Html;
 import us.codecraft.webmagic.selector.Selectable;
 
-import java.util.List;
-
 /**
  * Created with bookspider
  * User zhangmz
@@ -36,39 +32,29 @@ import java.util.List;
  * Desc
  */
 @Service
-public class KanunuBookPageProcessor extends BaseBookProcessor implements PageProcessor, BookPageProcessor {
+public class BixiaBookPageProcessor extends BaseBookProcessor implements PageProcessor, BookPageProcessor {
 
     private String name;
     private String url;
 
     @Autowired
-    private KanunuChapterPageProcessor kanunuChapterPageProcessor;
+    private BixiaChapterPageProcessor bixiaChapterPageProcessor;
 
     @Override
     public void process(Page page) {
         Html html = page.getHtml();
-        Selectable chapterSelectableList = html.xpath("//table/tbody/tr/td/table/tbody/tr/td/a");
+        Selectable chapterSelectableList = html.xpath("//div[@class=TabCss]/dl/dd/a");
         Book book = Book.me();
         if (parentNode instanceof Book) {
             book = (Book) parentNode;
         }
         book.setParseProcess(ParseProcessType.DOING);
         if (CollectionUtils.isNotEmpty(chapterSelectableList.nodes())) {
-            List<Node> nodeList = Lists.newArrayList();
+            int i = 0;
             for (Selectable tmpSelectable : chapterSelectableList.nodes()) {
                 String chapterInfo = tmpSelectable.toString();
                 String[] chapterInfoArr = HtmlUtil.extractHrefInfoFromA(chapterInfo);
                 System.out.println("chapter name:" + chapterInfoArr[0] + ",chapter url:" + chapterInfoArr[1]);
-
-                if (StringUtils.isBlank(chapterInfoArr[0]) || StringUtils.isBlank(chapterInfoArr[1])) {
-                    continue;
-                }
-
-                // 校验url是否为本书，如果章节url不包含书籍url，则跳过
-                String bookUrlPrefix = this.parentNode.getUrl().replace("/index", "").replace(".html", "/");
-                if (!chapterInfoArr[1].contains(bookUrlPrefix)) {
-                    continue;
-                }
 
                 // 解析index
                 Long index = 0l;
@@ -78,18 +64,13 @@ public class KanunuBookPageProcessor extends BaseBookProcessor implements PagePr
                     index = NumberUtils.toLong(parseArr[parseArr.length - 1].replace(".html", ""));
                 }
 
-                Node chapter = Chapter.me().bookPageProcessor(kanunuChapterPageProcessor).name(chapterInfoArr[0]).url(chapterInfoArr[1]).parent(parentNode);
-                ((Chapter) chapter).setIndex(index);
-                nodeList.add(chapter);
-//                ((BookSpiderService) spider).newNode(chapter);
-            }
-
-            for (int i = 0; i < nodeList.size(); i++) {
-                if (i == nodeList.size() - 1) {
+                // 判断解析是否完成
+                if (++i == chapterSelectableList.nodes().size()) {
                     book.setParseProcess(ParseProcessType.DONE);
                 }
-
-                ((BookSpiderService) spider).newNode(nodeList.get(i));
+                Node chapter = Chapter.me().bookPageProcessor(bixiaChapterPageProcessor).name(chapterInfoArr[0]).url(chapterInfoArr[1]).parent(parentNode);
+                ((Chapter) chapter).setIndex(index);
+                ((BookSpiderService) spider).newNode(chapter);
             }
         }
     }
@@ -104,12 +85,12 @@ public class KanunuBookPageProcessor extends BaseBookProcessor implements PagePr
         return site;
     }
 
-    public static KanunuBookPageProcessor newKanunuBookPageProcessor(String url, String name) {
-        KanunuBookPageProcessor kanunuBookPageProcessor = new KanunuBookPageProcessor();
-        kanunuBookPageProcessor.url = url;
-        kanunuBookPageProcessor.name = name;
+    public static BixiaBookPageProcessor newQuanxiaoshuoBookPageProcessor(String url, String name) {
+        BixiaBookPageProcessor bixiaBookPageProcessor = new BixiaBookPageProcessor();
+        bixiaBookPageProcessor.url = url;
+        bixiaBookPageProcessor.name = name;
 
-        return kanunuBookPageProcessor;
+        return bixiaBookPageProcessor;
     }
 
     public void start() {
@@ -117,6 +98,6 @@ public class KanunuBookPageProcessor extends BaseBookProcessor implements PagePr
     }
 
     public static void main(String[] args) {
-        KanunuBookPageProcessor.newKanunuBookPageProcessor("http://www.kanunu8.com/wuxia/201102/1726.html", "沧海").start();
+        BixiaBookPageProcessor.newQuanxiaoshuoBookPageProcessor("http://www.bxwx9.org/b/3/3134/", "昆仑").start();
     }
 }

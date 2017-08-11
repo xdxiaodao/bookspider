@@ -24,6 +24,7 @@ public class Book extends SpiderNode {
     private Integer chapterNum; // 章节数
     private Integer volumnNum; // 卷数
     private String submitTime; // 发表时间
+    private String description; // 描述
 
     public final Integer UPDATE_DOING = 0;
     public final Integer UPDATE_CLOSED = 1;
@@ -94,5 +95,13 @@ public class Book extends SpiderNode {
 
     public void setSubmitTime(String submitTime) {
         this.submitTime = submitTime;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

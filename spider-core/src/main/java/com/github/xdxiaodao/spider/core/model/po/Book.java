@@ -65,6 +65,11 @@ public class Book {
     private Integer status;
 
     /**
+     * 描述
+     */
+    private String description;
+
+    /**
      * @return id
      */
     public Long getId() {
@@ -276,5 +281,23 @@ public class Book {
      */
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    /**
+     * 获取描述
+     *
+     * @return description - 描述
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * 设置描述
+     *
+     * @param description 描述
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -18,6 +18,7 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
   </resultMap>
 
   <insert id="addBook" keyProperty="id" useGeneratedKeys="true">

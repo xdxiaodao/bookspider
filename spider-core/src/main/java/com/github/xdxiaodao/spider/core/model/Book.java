@@ -23,6 +23,7 @@ public class Book extends SpiderNode {
     private String category; // 类目
     private Integer chapterNum; // 章节数
     private Integer volumnNum; // 卷数
+    private String submitTime; // 发表时间
 
     public final Integer UPDATE_DOING = 0;
     public final Integer UPDATE_CLOSED = 1;
@@ -45,5 +46,53 @@ public class Book extends SpiderNode {
 
     public void setIsUpdate(Integer isUpdate) {
         this.isUpdate = isUpdate;
+    }
+
+    public String getCoverImg() {
+        return coverImg;
+    }
+
+    public void setCoverImg(String coverImg) {
+        this.coverImg = coverImg;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Integer getChapterNum() {
+        return chapterNum;
+    }
+
+    public void setChapterNum(Integer chapterNum) {
+        this.chapterNum = chapterNum;
+    }
+
+    public Integer getVolumnNum() {
+        return volumnNum;
+    }
+
+    public void setVolumnNum(Integer volumnNum) {
+        this.volumnNum = volumnNum;
+    }
+
+    public String getSubmitTime() {
+        return submitTime;
+    }
+
+    public void setSubmitTime(String submitTime) {
+        this.submitTime = submitTime;
     }
 }

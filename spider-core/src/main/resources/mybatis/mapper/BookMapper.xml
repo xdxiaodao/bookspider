@@ -14,13 +14,14 @@
     <result column="category" jdbcType="VARCHAR" property="category" />
     <result column="chapter_num" jdbcType="INTEGER" property="chapterNum" />
     <result column="volumn_num" jdbcType="INTEGER" property="volumnNum" />
+    <result column="submit_time" jdbcType="VARCHAR" property="submitTime" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
 
-  <insert id="addBook" useGeneratedKeys="true" keyProperty="id">
-    <selectKey keyProperty="id" resultType="int" order="AFTER">
+  <insert id="addBook" keyProperty="id" useGeneratedKeys="true">
+    <selectKey keyProperty="id" order="AFTER" resultType="int">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into tbl_book(id, name, url, cover_img, is_update, author, category, chapter_num, volumn_num, create_time, update_time, status)

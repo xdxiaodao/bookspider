@@ -1,7 +1,5 @@
 package com.github.xdxiaodao.spider.core.model.po;
 
-import lombok.Generated;
-
 import java.util.Date;
 import javax.persistence.*;
 
@@ -48,6 +46,12 @@ public class Book {
      */
     @Column(name = "volumn_num")
     private Integer volumnNum;
+
+    /**
+     * 发表时间
+     */
+    @Column(name = "submit_time")
+    private String submitTime;
 
     @Column(name = "create_time")
     private Date createTime;
@@ -208,6 +212,24 @@ public class Book {
      */
     public void setVolumnNum(Integer volumnNum) {
         this.volumnNum = volumnNum;
+    }
+
+    /**
+     * 获取发表时间
+     *
+     * @return submit_time - 发表时间
+     */
+    public String getSubmitTime() {
+        return submitTime;
+    }
+
+    /**
+     * 设置发表时间
+     *
+     * @param submitTime 发表时间
+     */
+    public void setSubmitTime(String submitTime) {
+        this.submitTime = submitTime;
     }
 
     /**

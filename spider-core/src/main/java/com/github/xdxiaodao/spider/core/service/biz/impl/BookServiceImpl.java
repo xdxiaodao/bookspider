@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 public class BookServiceImpl implements BookService {
     private static Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
-    @Autowired
+    @Autowired(required = false)
     private BookMapper bookMapper;
 
     /**
@@ -30,19 +30,26 @@ public class BookServiceImpl implements BookService {
      * @return 新加书籍信息编号
      */
     @Override
-    public int addBook(Book book) {
+    public Long addBook(Book book) {
         try {
             if (null == book || StringUtils.isBlank(book.getName())) {
-                return -1;
+                return -1l;
             }
             com.github.xdxiaodao.spider.core.model.po.Book bookPo = new com.github.xdxiaodao.spider.core.model.po.Book();
             BeanUtils.copyProperties(bookPo, book);
             int result = bookMapper.insert(bookPo);
-            return result;
+            if (result > 0) {
+                bookPo.setId(null);
+                com.github.xdxiaodao.spider.core.model.po.Book insertBook = bookMapper.selectOne(bookPo);
+                if (null != insertBook) {
+                    return insertBook.getId();
+                }
+            }
+            return -1l;
         } catch (Exception e) {
             logger.error("书籍信息写入失败", e);
         }
-        return -1;
+        return -1l;
     }
 
     /**

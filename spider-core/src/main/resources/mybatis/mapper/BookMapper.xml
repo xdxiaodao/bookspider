@@ -1,21 +1,29 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.github.xdxiaodao.spider.core.dao.mapper.BookMapper" >
-  <resultMap id="BaseResultMap" type="com.github.xdxiaodao.spider.core.model.po.Book" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.xdxiaodao.spider.core.dao.mapper.BookMapper">
+  <resultMap id="BaseResultMap" type="com.github.xdxiaodao.spider.core.model.po.Book">
     <!--
       WARNING - @mbggenerated
     -->
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="url" property="url" jdbcType="VARCHAR" />
-    <result column="coverImg" property="coverImg" jdbcType="VARCHAR" />
-    <result column="isUpdate" property="isUpdate" jdbcType="INTEGER" />
-    <result column="author" property="author" jdbcType="VARCHAR" />
-    <result column="category" property="category" jdbcType="VARCHAR" />
-    <result column="chapterNum" property="chapterNum" jdbcType="INTEGER" />
-    <result column="volumnNum" property="volumnNum" jdbcType="INTEGER" />
-    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="status" property="status" jdbcType="INTEGER" />
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="cover_img" jdbcType="VARCHAR" property="coverImg" />
+    <result column="is_update" jdbcType="INTEGER" property="isUpdate" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="chapter_num" jdbcType="INTEGER" property="chapterNum" />
+    <result column="volumn_num" jdbcType="INTEGER" property="volumnNum" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
+
+  <insert id="addBook" useGeneratedKeys="true" keyProperty="id">
+    <selectKey keyProperty="id" resultType="int" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_book(id, name, url, cover_img, is_update, author, category, chapter_num, volumn_num, create_time, update_time, status)
+    values (#{id}, #{name}, #{url}, #{coverImg}, #{isUpdate}, #{author}, #{category}, #{chapterNum}, #{volumnNum}, #{createTime}, #{updateTime}, #{status})
+  </insert>
 </mapper>

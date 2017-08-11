@@ -6,6 +6,7 @@ import com.github.xdxiaodao.spider.core.base.model.SpiderNode;
 import com.github.xdxiaodao.spider.core.base.service.platform.BaseThreadFactory;
 import com.github.xdxiaodao.spider.core.base.service.webmagic.SafelyHttpDownloader;
 import com.github.xdxiaodao.spider.core.common.enums.ParseProcessType;
+import com.github.xdxiaodao.spider.core.common.enums.StoreType;
 import com.github.xdxiaodao.spider.core.common.interfaces.BookPageProcessor;
 import com.github.xdxiaodao.spider.core.common.interfaces.ISpider;
 import com.github.xdxiaodao.spider.core.model.Book;
@@ -13,6 +14,8 @@ import com.github.xdxiaodao.spider.core.model.BookCategory;
 import com.github.xdxiaodao.spider.core.model.Chapter;
 import com.github.xdxiaodao.spider.core.service.parser.kanunu.KanunuBookPageProcessor;
 import com.github.xdxiaodao.spider.core.service.parser.quanxiaoshuo.QuanxiaoshuoMainPageProcessor;
+import com.github.xdxiaodao.spider.core.service.store.SpiderStore;
+import com.github.xdxiaodao.spider.core.service.store.SpiderStoreFactory;
 import com.github.xdxiaodao.spider.core.util.SpringBeanUtil;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -51,8 +54,6 @@ public class BookSpiderService implements ISpider, InitializingBean{
 
     private ExecutorService bookSpiderExecutor = Executors.newFixedThreadPool(30, new BaseThreadFactory("bookSpider-"));
     private ExecutorService bookCollectExecutor = Executors.newFixedThreadPool(5, new BaseThreadFactory("bookPipline-"));
-
-    private static String ROOT_DIR_NAME = "/data/spider/quanxiaoshuo/";
 
     @Autowired
     private QuanxiaoshuoMainPageProcessor quanxiaoshuoMainPageProcessor;
@@ -145,68 +146,15 @@ public class BookSpiderService implements ISpider, InitializingBean{
                         }
                         bookQueue.put(spiderNode);
                     } else {
-                        doBookCollect(spiderNode);
+                        SpiderStore spiderStore = SpiderStoreFactory.getSpiderStore();
+                        if (null != spiderStore) {
+                            spiderStore.store(spiderNode);
+                        }
                     }
                 } catch (Exception e) {
                     logger.error("书籍收集失败", e);
                 }
             }
-        }
-
-        private void doBookCollect(SpiderNode spiderNode) {
-            Map<String, Node> childNodeMap = spiderNode.getChildNodeMap();
-            if (MapUtils.isEmpty(childNodeMap)) {
-                return;
-            }
-
-            List<Node> nodeList = new ArrayList<Node>(childNodeMap.values());
-            Collections.sort(nodeList, new Comparator<Node>() {
-                @Override
-                public int compare(Node o1, Node o2) {
-                    if (!(o1 instanceof Chapter) || !(o2 instanceof Chapter)) {
-                        return 0;
-                    }
-
-                    return ((Chapter) o1).getIndex().compareTo(((Chapter) o2).getIndex());
-                }
-            });
-
-            // 拼装书籍路径
-            String bookDir = ROOT_DIR_NAME + spiderNode.getParent().getName() + "/" + spiderNode.getName();
-//            String bookPath = bookDir + "\\" + spiderNode.getName();
-            File file = new File(bookDir);
-            if (!file.exists()) {
-                file.mkdirs();
-            }
-
-            int count = 1;
-            for (Node node : nodeList) {
-                if (!(node instanceof Chapter)) {
-                    continue;
-                }
-                FileWriter fileWriter = null;
-                try {
-                    String bookPath = bookDir + "/" + String.format("%04d", count) + ".txt";
-                    File bookFile = new File(bookPath);
-                    if (bookFile.exists()) {
-                        continue;
-                    }
-                    fileWriter = new FileWriter(bookPath, false);
-                    IOUtils.write(((Chapter) node).getContent(), fileWriter);
-                    count++;
-                } catch (Exception e) {
-                    logger.error("写数据失败,数据内容：{}", ((Chapter) node).getContent());
-                } finally {
-                    try {
-                        if (null != fileWriter) {
-                            fileWriter.close();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
         }
     }
 

@@ -57,7 +57,7 @@ public class KanunuBookPageProcessor extends BaseBookProcessor implements PagePr
         }
         book.setParseProcess(ParseProcessType.DOING);
         book.setUpdateTime(book.getCreateTime());
-        int bookId = bookService.addBook(book);
+        Long bookId = bookService.addBook(book);
         if (CollectionUtils.isNotEmpty(chapterSelectableList.nodes())) {
             List<Node> nodeList = Lists.newArrayList();
             for (Selectable tmpSelectable : chapterSelectableList.nodes()) {
@@ -85,7 +85,7 @@ public class KanunuBookPageProcessor extends BaseBookProcessor implements PagePr
 
                 Node chapter = Chapter.me().bookPageProcessor(kanunuChapterPageProcessor).name(chapterInfoArr[0]).url(chapterInfoArr[1]).parent(parentNode);
                 ((Chapter) chapter).setIndex(index);
-                ((Chapter) chapter).setBookId((long) bookId);
+                ((Chapter) chapter).setBookId(bookId);
                 nodeList.add(chapter);
 //                ((BookSpiderService) spider).newNode(chapter);
             }

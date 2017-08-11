@@ -1,13 +1,12 @@
 package com.github.xdxiaodao.spider.core.model.po;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "tbl_volumn")
 public class Volumn {
     @Id
-    @GeneratedValue(generator="JDBC")
+    @GeneratedValue(generator = "JDBC")
     private Long id;
 
     private String name;
@@ -17,21 +16,26 @@ public class Volumn {
     /**
      * 书籍ID
      */
+    @Column(name = "book_id")
     private Long bookId;
 
     /**
      * 卷编号
      */
+    @Column(name = "volumn_index")
     private Integer volumnIndex;
 
     /**
      * 章节数
      */
+    @Column(name = "chapter_num")
     private Integer chapterNum;
 
-    private Timestamp createTime;
+    @Column(name = "create_time")
+    private Date createTime;
 
-    private Timestamp updateTime;
+    @Column(name = "update_time")
+    private Date updateTime;
 
     /**
      * 状态，1：正常；0：删除
@@ -41,6 +45,7 @@ public class Volumn {
     /**
      * 卷描述
      */
+    @Column(name = "volumn_desc")
     private String volumnDesc;
 
     /**
@@ -88,7 +93,7 @@ public class Volumn {
     /**
      * 获取书籍ID
      *
-     * @return bookId - 书籍ID
+     * @return book_id - 书籍ID
      */
     public Long getBookId() {
         return bookId;
@@ -106,7 +111,7 @@ public class Volumn {
     /**
      * 获取卷编号
      *
-     * @return volumnIndex - 卷编号
+     * @return volumn_index - 卷编号
      */
     public Integer getVolumnIndex() {
         return volumnIndex;
@@ -124,7 +129,7 @@ public class Volumn {
     /**
      * 获取章节数
      *
-     * @return chapterNum - 章节数
+     * @return chapter_num - 章节数
      */
     public Integer getChapterNum() {
         return chapterNum;
@@ -140,30 +145,30 @@ public class Volumn {
     }
 
     /**
-     * @return createTime
+     * @return create_time
      */
-    public Timestamp getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
     /**
      * @param createTime
      */
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
     /**
-     * @return updateTime
+     * @return update_time
      */
-    public Timestamp getUpdateTime() {
+    public Date getUpdateTime() {
         return updateTime;
     }
 
     /**
      * @param updateTime
      */
-    public void setUpdateTime(Timestamp updateTime) {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 
@@ -188,7 +193,7 @@ public class Volumn {
     /**
      * 获取卷描述
      *
-     * @return volumnDesc - 卷描述
+     * @return volumn_desc - 卷描述
      */
     public String getVolumnDesc() {
         return volumnDesc;

@@ -1,13 +1,12 @@
 package com.github.xdxiaodao.spider.core.model.po;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "tbl_chapter")
 public class Chapter {
     @Id
-    @GeneratedValue(generator="JDBC")
+    @GeneratedValue(generator = "JDBC")
     private Long id;
 
     private String name;
@@ -17,31 +16,38 @@ public class Chapter {
     /**
      * 书籍章节索引
      */
+    @Column(name = "book_chapter_index")
     private Integer bookChapterIndex;
 
     /**
      * 卷章节索引
      */
+    @Column(name = "volumn_chapter_index")
     private Integer volumnChapterIndex;
 
     /**
      * 书籍ID
      */
+    @Column(name = "book_id")
     private Long bookId;
 
     /**
      * 卷ID
      */
+    @Column(name = "volumn_id")
     private Long volumnId;
 
     /**
      * 章节长度
      */
+    @Column(name = "content_size")
     private Integer contentSize;
 
-    private Timestamp createTime;
+    @Column(name = "create_time")
+    private Date createTime;
 
-    private Timestamp updateTime;
+    @Column(name = "update_time")
+    private Date updateTime;
 
     /**
      * 状态，1：正常；0：删除
@@ -98,7 +104,7 @@ public class Chapter {
     /**
      * 获取书籍章节索引
      *
-     * @return bookChapterIndex - 书籍章节索引
+     * @return book_chapter_index - 书籍章节索引
      */
     public Integer getBookChapterIndex() {
         return bookChapterIndex;
@@ -116,7 +122,7 @@ public class Chapter {
     /**
      * 获取卷章节索引
      *
-     * @return volumnChapterIndex - 卷章节索引
+     * @return volumn_chapter_index - 卷章节索引
      */
     public Integer getVolumnChapterIndex() {
         return volumnChapterIndex;
@@ -134,7 +140,7 @@ public class Chapter {
     /**
      * 获取书籍ID
      *
-     * @return bookId - 书籍ID
+     * @return book_id - 书籍ID
      */
     public Long getBookId() {
         return bookId;
@@ -152,7 +158,7 @@ public class Chapter {
     /**
      * 获取卷ID
      *
-     * @return volumnId - 卷ID
+     * @return volumn_id - 卷ID
      */
     public Long getVolumnId() {
         return volumnId;
@@ -170,7 +176,7 @@ public class Chapter {
     /**
      * 获取章节长度
      *
-     * @return contentSize - 章节长度
+     * @return content_size - 章节长度
      */
     public Integer getContentSize() {
         return contentSize;
@@ -186,30 +192,30 @@ public class Chapter {
     }
 
     /**
-     * @return createTime
+     * @return create_time
      */
-    public Timestamp getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
     /**
      * @param createTime
      */
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
     /**
-     * @return updateTime
+     * @return update_time
      */
-    public Timestamp getUpdateTime() {
+    public Date getUpdateTime() {
         return updateTime;
     }
 
     /**
      * @param updateTime
      */
-    public void setUpdateTime(Timestamp updateTime) {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 

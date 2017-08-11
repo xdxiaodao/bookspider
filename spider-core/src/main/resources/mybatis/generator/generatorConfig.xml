@@ -24,9 +24,9 @@
 
         <javaClientGenerator targetPackage="com.github.xdxiaodao.spider.core.dao.mapper" targetProject="D:\personal\code\bookspider\spider-core\src\main\java" type="XMLMAPPER" />
 
-        <table tableName="tbl_volumn" domainObjectName="Volumn">
-            <property name="useActualColumnNames" value="true" />
-            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        <table tableName="tbl_chapter" domainObjectName="Chapter">
+            <property name="useActualColumnNames" value="false" />
+            <generatedKey column="id" sqlStatement="Mysql"/>
         </table>
     </context>
 </generatorConfiguration>

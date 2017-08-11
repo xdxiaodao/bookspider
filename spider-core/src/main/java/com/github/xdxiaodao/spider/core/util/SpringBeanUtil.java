@@ -28,4 +28,23 @@ public class SpringBeanUtil implements BeanFactoryAware {
     public static <T> T getBean(Class<T> tClass) {
         return beanFactory.getBean(tClass);
     }
+
+    /**
+     * 根据beanName获取bean实例
+     * @param beanName 类名
+     * @return 实例
+     */
+    public static Object getBean(String beanName) {
+        return beanFactory.getBean(beanName);
+    }
+
+    /**
+     * 根据类名获取bean实例
+     * @param className 类名
+     * @param args 参数
+     * @return 实例
+     */
+    public static Object getBean(String className, Object... args) {
+        return beanFactory.getBean(className, args);
+    }
 }

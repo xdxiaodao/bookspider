@@ -16,5 +16,5 @@ public interface ChapterService {
      * @param chapter 章节信息
      * @return 添加后的章节ID
      */
-    public int addChapter(Chapter chapter);
+    public Long addChapter(Chapter chapter);
 }

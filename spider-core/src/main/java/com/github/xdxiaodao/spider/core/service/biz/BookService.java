@@ -16,7 +16,7 @@ public interface BookService {
      * @param book 书籍信息
      * @return 新加书籍信息编号
      */
-    public int addBook(Book book);
+    public Long addBook(Book book);
 
     /**
      * 根据书名查询书籍信息

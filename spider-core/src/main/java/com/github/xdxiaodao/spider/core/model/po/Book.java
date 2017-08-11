@@ -1,13 +1,14 @@
 package com.github.xdxiaodao.spider.core.model.po;
 
-import java.sql.Timestamp;
+import lombok.Generated;
+
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "tbl_book")
 public class Book {
     @Id
-    @GeneratedValue(generator="JDBC")
+    @GeneratedValue(generator = "JDBC")
     private Long id;
 
     private String name;
@@ -17,11 +18,13 @@ public class Book {
     /**
      * 封面图
      */
+    @Column(name = "cover_img")
     private String coverImg;
 
     /**
      * 是否已更新完结，0：未更新完结，1：已完结，2：暂停更新
      */
+    @Column(name = "is_update")
     private Integer isUpdate;
 
     /**
@@ -37,16 +40,20 @@ public class Book {
     /**
      * 章节数
      */
+    @Column(name = "chapter_num")
     private Integer chapterNum;
 
     /**
      * 卷数
      */
+    @Column(name = "volumn_num")
     private Integer volumnNum;
 
-    private Timestamp createTime;
+    @Column(name = "create_time")
+    private Date createTime;
 
-    private Timestamp updateTime;
+    @Column(name = "update_time")
+    private Date updateTime;
 
     /**
      * 状态，1：正常;0:删除
@@ -98,7 +105,7 @@ public class Book {
     /**
      * 获取封面图
      *
-     * @return coverImg - 封面图
+     * @return cover_img - 封面图
      */
     public String getCoverImg() {
         return coverImg;
@@ -116,7 +123,7 @@ public class Book {
     /**
      * 获取是否已更新完结，0：未更新完结，1：已完结，2：暂停更新
      *
-     * @return isUpdate - 是否已更新完结，0：未更新完结，1：已完结，2：暂停更新
+     * @return is_update - 是否已更新完结，0：未更新完结，1：已完结，2：暂停更新
      */
     public Integer getIsUpdate() {
         return isUpdate;
@@ -170,7 +177,7 @@ public class Book {
     /**
      * 获取章节数
      *
-     * @return chapterNum - 章节数
+     * @return chapter_num - 章节数
      */
     public Integer getChapterNum() {
         return chapterNum;
@@ -188,7 +195,7 @@ public class Book {
     /**
      * 获取卷数
      *
-     * @return volumnNum - 卷数
+     * @return volumn_num - 卷数
      */
     public Integer getVolumnNum() {
         return volumnNum;
@@ -204,7 +211,7 @@ public class Book {
     }
 
     /**
-     * @return createTime
+     * @return create_time
      */
     public Date getCreateTime() {
         return createTime;
@@ -213,21 +220,21 @@ public class Book {
     /**
      * @param createTime
      */
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
     /**
-     * @return updateTime
+     * @return update_time
      */
-    public Timestamp getUpdateTime() {
+    public Date getUpdateTime() {
         return updateTime;
     }
 
     /**
      * @param updateTime
      */
-    public void setUpdateTime(Timestamp updateTime) {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 

@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 public class ChapterServiceImpl implements ChapterService {
     private static Logger logger = LoggerFactory.getLogger(ChapterServiceImpl.class);
 
-    @Autowired
+    @Autowired(required = false)
     private ChapterMapper chapterMapper;
 
     /**
@@ -31,18 +31,25 @@ public class ChapterServiceImpl implements ChapterService {
      * @return 添加后的章节ID
      */
     @Override
-    public int addChapter(Chapter chapter) {
+    public Long addChapter(Chapter chapter) {
         try {
             if (null == chapter || StringUtils.isBlank(chapter.getName())) {
-                return -1;
+                return -1l;
             }
             com.github.xdxiaodao.spider.core.model.po.Chapter chapterPo = new com.github.xdxiaodao.spider.core.model.po.Chapter();
             BeanUtils.copyProperties(chapterPo, chapter);
             int result = chapterMapper.insert(chapterPo);
-            return result;
+            if (result > 0) {
+                chapterPo.setId(null);
+                com.github.xdxiaodao.spider.core.model.po.Chapter insertChapter = chapterMapper.selectOne(chapterPo);
+                if (null != insertChapter) {
+                    return insertChapter.getId();
+                }
+            }
+            return -1l;
         } catch (Exception e) {
             logger.error("章节信息信息写入失败", e);
         }
-        return -1;
+        return -1l;
     }
 }
